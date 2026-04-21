@@ -1,0 +1,173 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageShell from "../components/PageShell.astro";
+import Hero from "../components/Hero.astro";
+import ContentSection from "../components/ContentSection.astro";
+import CardGrid from "../components/CardGrid.astro";
+import DeadlineStrip from "../components/DeadlineStrip.astro";
+import SearchBox from "../components/SearchBox.astro";
+import { homepageQuickActions, sectionCards, siteMeta } from "../data/site";
+import { withBase } from "../data/paths";
+
+const featureCards = [
+  {
+    href: "/tools",
+    title: "الأدوات الأكاديمية",
+    description: "معدل فصلي، غياب، تاريخ، ومؤشرات زمنية في صفحات خفيفة وسريعة.",
+    tag: "Tools"
+  },
+  {
+    href: "/policies",
+    title: "اللوائح والمسارات",
+    description: "تحويل داخلي وخارجي، ماجستير، اعتذار عن مادة، ومراتب الشرف.",
+    tag: "Policies"
+  },
+  {
+    href: "/plans",
+    title: "الخطط والخريطة الدراسية",
+    description: "روابط الخطط الدراسية مجمعة في صفحة أوضح وأسهل للوصول.",
+    tag: "Plans"
+  },
+  {
+    href: "/deanship",
+    title: "الخدمات والمراجع",
+    description: "وسائل التواصل والمراجع المصورة المهمة من المصدر القديم.",
+    tag: "Services"
+  }
+];
+---
+
+<BaseLayout title={siteMeta.title} description={siteMeta.description}>
+  <PageShell>
+    <Hero
+      eyebrow="بوابة أكاديمية مستقلة"
+      title="دليل KKU الأكاديمي بتجربة أكثر هدوءاً ووضوحاً."
+      summary="نسخة معاد بناؤها من الموقع القديم لتحويل الصفحات المتفرقة إلى منتج أكاديمي أوضح: أدوات عملية، لوائح قابلة للمسح السريع، وروابط مهمة ضمن هيكل واحد مناسب للجوال وسهل الصيانة."
+      primaryAction={{ href: "/tools", label: "ابدأ بالأدوات" }}
+      secondaryAction={{ href: "/policies", label: "راجع اللوائح" }}
+    />
+
+    <ContentSection
+      eyebrow="Quick Start"
+      title="ابدأ من أكثر ما يحتاجه الطالب اليوم"
+      summary="الصفحة الرئيسية لم تعد مجرد قائمة روابط؛ بل نقطة دخول تقترح المسار الأنسب حسب المهمة التي تريد إنجازها."
+    >
+      <CardGrid items={homepageQuickActions} />
+    </ContentSection>
+
+    <ContentSection
+      eyebrow="Search"
+      title="وصول سريع لكل الصفحات"
+      summary="ابحث باسم الخدمة أو بنوع المهمة للوصول المباشر إلى الصفحة المناسبة."
+    >
+      <div class="home-search">
+        <SearchBox />
+      </div>
+    </ContentSection>
+
+    <ContentSection
+      eyebrow="Deadlines"
+      title="تواريخ وإشارات مهمة"
+      summary="الموقع القديم كان يخلط بين الأدوات والمواعيد. هنا أصبحت المراجع الزمنية في شريط واحد يسهل مراجعته."
+    >
+      <DeadlineStrip />
+    </ContentSection>
+
+    <ContentSection
+      eyebrow="Domains"
+      title="المحتوى مجمّع في نطاقات واضحة"
+      summary="بدلاً من صفحات منفصلة بلا سياق، تم تجميع المحتوى إلى نطاقات متماسكة تسهّل التنقل واتخاذ الخطوة التالية."
+    >
+      <CardGrid items={featureCards} />
+    </ContentSection>
+
+    <ContentSection
+      eyebrow="Common Paths"
+      title="سيناريوهات أكاديمية شائعة"
+      summary="إذا كنت لا تعرف من أين تبدأ، فهذه هي الحالات الأكثر تكراراً بين الطلاب."
+    >
+      <div class="scenario-grid">
+        <article class="surface-card">
+          <h3>أريد معرفة شروط التحويل</h3>
+          <p>ابدأ بصفحة اللوائح ثم انتقل مباشرة إلى التحويل الداخلي أو الخارجي حسب وضعك الأكاديمي الحالي.</p>
+          <a href={withBase("/policies")}>افتح مسارات التحويل</a>
+        </article>
+        <article class="surface-card">
+          <h3>أحتاج أداة سريعة قبل التسجيل</h3>
+          <p>توجه إلى الأدوات لحساب المعدل أو تقدير الغياب قبل اتخاذ قرارك في المقرر.</p>
+          <a href={withBase("/tools")}>افتح الأدوات</a>
+        </article>
+        <article class="surface-card">
+          <h3>أبحث عن خطة أو مرجع مصوّر</h3>
+          <p>صفحات الخطط والخدمات تجمع الروابط والصور المرجعية من المصدر القديم في عرض أنظف.</p>
+          <a href={withBase("/plans")}>افتح الخطط</a>
+        </article>
+      </div>
+    </ContentSection>
+
+    <ContentSection
+      eyebrow="Coverage"
+      title="تغطية المحتوى القديمة محفوظة، لكن بطريقة أفضل"
+      summary="ما زالت الأدوات واللوائح والصفحات المرجعية موجودة، لكن الواجهة أصبحت قابلة للمسح، والصفحات مرتبطة ببعضها، والمكوّنات قابلة للتطوير لاحقاً."
+    >
+      <div class="mini-grid">
+        <div>
+          <h3>الأدوات</h3>
+          <ul class="link-list">
+            {sectionCards.tools.slice(0, 5).map((item) => (
+              <li><a href={withBase(item.href)}><span>{item.label}</span><span class="muted">{item.category}</span></a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>اللوائح</h3>
+          <ul class="link-list">
+            {sectionCards.policies.slice(0, 5).map((item) => (
+              <li><a href={withBase(item.href)}><span>{item.label}</span><span class="muted">{item.category}</span></a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>المراجع</h3>
+          <ul class="link-list">
+            {sectionCards.resources.slice(0, 5).map((item) => (
+              <li><a href={withBase(item.href)}><span>{item.label}</span><span class="muted">{item.category}</span></a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </ContentSection>
+  </PageShell>
+</BaseLayout>
+
+<style>
+  .home-search {
+    max-width: 760px;
+  }
+
+  .scenario-grid,
+  .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .scenario-grid article {
+    display: grid;
+    gap: 0.9rem;
+    padding: 1.25rem;
+  }
+
+  .scenario-grid a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (max-width: 900px) {
+    .scenario-grid,
+    .mini-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

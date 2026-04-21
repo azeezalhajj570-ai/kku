@@ -1,0 +1,35 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+const imageUrl = `${import.meta.env.BASE_URL}images/Apology-material.jpg`;
+---
+
+<ArticleLayout
+  title="الاعتذار عن مادة"
+  description="مرجع بصري لإجراءات الاعتذار عن مادة كما ورد في المصدر القديم."
+  summary="لأن المصدر القديم اعتمد على صورة إجرائية، تحافظ هذه الصفحة على المرجع نفسه داخل إطار أوضح مع تنبيه يضعه في سياق صحيح."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/policies", label: "اللوائح" },
+    { href: "/apology-material", label: "الاعتذار عن مادة" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "إجراء أكاديمي" },
+    { label: "نوع المحتوى", value: "مرجع مصوّر" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <Callout tone="warning" title="قبل تنفيذ الإجراء">
+    راجع فترة الاعتذار المعلنة في التقويم الأكاديمي وتحقق من بوابة الجامعة قبل الاعتماد على هذا المرجع وحده.
+  </Callout>
+
+  <figure class="surface-card framed-image">
+    <img src={imageUrl} alt="صورة توضح خطوات أو شروط الاعتذار عن مادة" loading="lazy" />
+  </figure>
+</ArticleLayout>
+
+<style>
+  .framed-image {
+    padding: 1rem;
+  }
+</style>

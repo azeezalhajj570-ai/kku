@@ -1,0 +1,85 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+---
+
+<ArticleLayout
+  title="المكافأة الشهرية"
+  description="مؤشر زمني تقديري ليوم إيداع المكافأة بناءً على مرجع 23 من كل شهر ميلادي."
+  summary="الصفحة الأصلية كانت تعرض عدّاً تنازلياً ثابتاً. هذه النسخة تقدّم مؤشراً حياً للموعد المرجعي نفسه مع توضيح أنه تقديري وليس إعلاناً رسمياً."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/tools", label: "الأدوات" },
+    { href: "/money", label: "المكافأة" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "مؤشر زمني" },
+    { label: "المرجع القديم", value: "23 من كل شهر ميلادي" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <Callout tone="warning" title="مهم">
+    هذه الصفحة تعرض مؤشراً تقديرياً مبنياً على ما كان منشوراً في المصدر القديم. لا تعتمد عليها كإعلان رسمي نهائي، خصوصاً عند تغيّر الإجراءات أو الإجازات.
+  </Callout>
+
+  <section class="surface-card countdown-grid">
+    <div>
+      <span class="badge">التاريخ المرجعي القادم</span>
+      <p id="money-date" class="count-value">--</p>
+    </div>
+    <div>
+      <span class="badge">الأيام المتبقية</span>
+      <p id="money-days" class="count-value">--</p>
+    </div>
+    <div>
+      <span class="badge">العد التنازلي</span>
+      <p id="money-countdown" class="count-value">--</p>
+    </div>
+  </section>
+
+  <script is:inline>
+    const dateEl = document.querySelector("#money-date");
+    const daysEl = document.querySelector("#money-days");
+    const countdownEl = document.querySelector("#money-countdown");
+
+    const computeNextDeposit = () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getDate() <= 23 ? now.getMonth() : now.getMonth() + 1;
+      const target = new Date(year, month, 23, 9, 0, 0);
+      const diff = target.getTime() - now.getTime();
+      const totalSeconds = Math.max(0, Math.floor(diff / 1000));
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      dateEl.textContent = new Intl.DateTimeFormat("ar-SA", { day: "numeric", month: "long", year: "numeric" }).format(target);
+      daysEl.textContent = String(days);
+      countdownEl.textContent = `${days} يوم ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
+    };
+
+    computeNextDeposit();
+    setInterval(computeNextDeposit, 1000);
+  </script>
+</ArticleLayout>
+
+<style>
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .count-value {
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    font-weight: 700;
+    margin-top: 0.7rem;
+  }
+
+  @media (max-width: 820px) {
+    .countdown-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

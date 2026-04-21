@@ -1,0 +1,115 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+---
+
+<ArticleLayout
+  title="الاختبارات النهائية"
+  description="صفحة مرجعية للعد التنازلي إلى الاختبارات النهائية مع حفظ التواريخ القديمة كمرجع مؤرشف."
+  summary="بدلاً من عرض تواريخ منتهية الصلاحية كما في الصفحة القديمة، تعرض هذه النسخة عداداً قابلاً للتخصيص وتحفظ آخر تواريخ ظهرت في المصدر القديم لأغراض التوثيق فقط."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/tools", label: "الأدوات" },
+    { href: "/final", label: "النهائي" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "مؤشر زمني" },
+    { label: "تواريخ مؤرشفة", value: "15 ديسمبر 2024 و11 مايو 2025" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <Callout tone="warning" title="التواريخ القديمة">
+    آخر تاريخين كانا ظاهرين في المصدر القديم هما <strong>15 ديسمبر 2024</strong> و<strong>11 مايو 2025</strong>. تم الاحتفاظ بهما هنا كأرشيف فقط، وليس كمواعيد حالية.
+  </Callout>
+
+  <section class="surface-card custom-deadline">
+    <label>
+      <span>أدخل موعد الاختبار النهائي الذي تريد متابعته</span>
+      <input id="final-date-input" type="date" />
+    </label>
+    <div class="countdown-grid">
+      <div>
+        <span class="badge">الموعد المحدد</span>
+        <p id="final-date-label" class="count-value">--</p>
+      </div>
+      <div>
+        <span class="badge">الأيام المتبقية</span>
+        <p id="final-days" class="count-value">--</p>
+      </div>
+      <div>
+        <span class="badge">العد التنازلي</span>
+        <p id="final-countdown" class="count-value">--</p>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    const input = document.querySelector("#final-date-input");
+    const dateLabel = document.querySelector("#final-date-label");
+    const daysLabel = document.querySelector("#final-days");
+    const countdown = document.querySelector("#final-countdown");
+
+    const renderCountdown = () => {
+      if (!input.value) {
+        dateLabel.textContent = "--";
+        daysLabel.textContent = "--";
+        countdown.textContent = "أدخل تاريخاً للبدء";
+        return;
+      }
+      const target = new Date(`${input.value}T09:00:00`);
+      const now = new Date();
+      const diff = target.getTime() - now.getTime();
+      const totalSeconds = Math.max(0, Math.floor(diff / 1000));
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      dateLabel.textContent = new Intl.DateTimeFormat("ar-SA", { day: "numeric", month: "long", year: "numeric" }).format(target);
+      daysLabel.textContent = String(days);
+      countdown.textContent = `${days} يوم ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
+    };
+
+    input?.addEventListener("input", renderCountdown);
+    setInterval(renderCountdown, 1000);
+    renderCountdown();
+  </script>
+</ArticleLayout>
+
+<style>
+  .custom-deadline {
+    padding: 1.25rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .custom-deadline label {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .custom-deadline input {
+    min-height: 3rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .count-value {
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    font-weight: 700;
+    margin-top: 0.7rem;
+  }
+
+  @media (max-width: 820px) {
+    .countdown-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

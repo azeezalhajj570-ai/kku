@@ -1,0 +1,30 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+import { evolveLinks } from "../data/content";
+---
+
+<ArticleLayout
+  title="Evolve"
+  description="روابط Evolve المذكورة في المصدر القديم مجمعة في صفحة واحدة."
+  summary="حُفظت الصفحة كمرجع روابط فقط لأن المصدر القديم كان يقدّم وصلات خارجية مرتبطة بمحتوى Evolve وقناة إبراهيم عادل."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/evolve", label: "Evolve" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "روابط خارجية" },
+    { label: "المحتوى", value: "مرجع منقول من النسخة القديمة" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <Callout title="ملاحظة">
+    هذه الصفحة لا تتحقق من صلاحية الروابط أو ملكيتها، بل تعيد تنظيم الروابط التي كانت منشورة في المصدر القديم ضمن صفحة أكثر وضوحاً.
+  </Callout>
+
+  <ul class="link-list">
+    {evolveLinks.map(([label, href]) => (
+      <li><a href={href} target="_blank" rel="noreferrer"><span>{label}</span><span class="muted">رابط خارجي</span></a></li>
+    ))}
+  </ul>
+</ArticleLayout>

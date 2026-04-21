@@ -1,0 +1,34 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+import { externalTransferRules } from "../data/content";
+---
+
+<ArticleLayout
+  title="شروط التحويل الخارجي"
+  description="ضوابط التحويل من جامعة أخرى إلى جامعة الملك خالد."
+  summary="تم تفكيك النص الطويل في المصدر القديم إلى نقاط قابلة للفهم السريع: جهة الدراسة السابقة، الحالة الأكاديمية، المدة، الامتداد التخصصي، وطريقة المفاضلة."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/policies", label: "اللوائح" },
+    { href: "/external-transfer", label: "التحويل الخارجي" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "تحويل خارجي" },
+    { label: "التركيز", value: "شروط أهلية ومفاضلة" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <Callout tone="warning" title="قبل التقديم">
+    تأكد أن تخصصك المطلوب امتداد لتخصصك السابق وأنك لم تتجاوز المدة أو عدد التحويلات المسموح بها قبل تجهيز الطلب.
+  </Callout>
+
+  <section>
+    <h2>الضوابط</h2>
+    <ul class="link-list">
+      {externalTransferRules.map((rule) => (
+        <li><span>{rule}</span></li>
+      ))}
+    </ul>
+  </section>
+</ArticleLayout>

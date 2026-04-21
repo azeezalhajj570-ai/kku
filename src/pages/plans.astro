@@ -1,0 +1,53 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+import { plansLinks } from "../data/content";
+---
+
+<ArticleLayout
+  title="الخطط الدراسية"
+  description="روابط الخطط الدراسية التي كانت منشورة في المصدر القديم ضمن جدول مبسط."
+  summary="تم الحفاظ على فكرة الصفحة الأصلية: تجميع روابط الخطط الدراسية، لكن بعرض أوضح ومسح أسرع على الجوال وسطح المكتب."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/plans", label: "الخطط" }
+  ]}
+  toc={[
+    { href: "#plans-table", label: "جدول الروابط" },
+    { href: "#notes", label: "ملاحظات الاستخدام" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "مرجع أكاديمي" },
+    { label: "المصدر القديم", value: "Plans.html" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <section id="plans-table">
+    <h2>روابط الخطط الجديدة 1446هـ</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>النوع</th>
+          <th>الاسم</th>
+          <th>الرابط</th>
+        </tr>
+      </thead>
+      <tbody>
+        {plansLinks.map(([type, name, href]) => (
+          <tr>
+            <td>{type}</td>
+            <td>{name}</td>
+            <td><a href={href} target="_blank" rel="noreferrer">فتح الرابط</a></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+
+  <section id="notes">
+    <h2>ملاحظات الاستخدام</h2>
+    <Callout title="تنبيه تحريري">
+      الروابط أعلاه منقولة من المصدر القديم. إذا تغيرت الخطط أو تم تعديل روابطها فالأولوية دائماً لما تنشره القنوات الرسمية للجامعة أو الحسابات المعتمدة.
+    </Callout>
+  </section>
+</ArticleLayout>

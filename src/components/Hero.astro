@@ -1,0 +1,101 @@
+---
+import { withBase } from "../data/paths";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  summary: string;
+  primaryAction?: { href: string; label: string };
+  secondaryAction?: { href: string; label: string };
+}
+
+const { eyebrow, title, summary, primaryAction, secondaryAction } = Astro.props;
+---
+
+<section class="hero section-spacing">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1>{title}</h1>
+      <p class="lede">{summary}</p>
+      <div class="button-row">
+        {primaryAction && (
+          <a class="button button-primary" href={withBase(primaryAction.href)}>{primaryAction.label}</a>
+        )}
+        {secondaryAction && (
+          <a class="button button-secondary" href={withBase(secondaryAction.href)}>{secondaryAction.label}</a>
+        )}
+      </div>
+    </div>
+    <div class="hero-panel surface-card">
+      <p class="hero-kicker">Editorial Academic Product</p>
+      <div class="hero-stats">
+        <article>
+          <strong>15+</strong>
+          <span>صفحات عملية ضمن هيكل موحد</span>
+        </article>
+        <article>
+          <strong>RTL</strong>
+          <span>تجربة عربية محسّنة للقراءة على الجوال</span>
+        </article>
+        <article>
+          <strong>A11Y</strong>
+          <span>تخطي للمحتوى، تنقل بلوحة المفاتيح، وحركة منخفضة</span>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.3fr minmax(280px, 0.8fr);
+    gap: 1.5rem;
+    align-items: end;
+  }
+
+  .hero-copy {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .hero-panel {
+    padding: 1.4rem;
+  }
+
+  .hero-kicker {
+    font-size: 0.86rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 1rem;
+  }
+
+  .hero-stats {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .hero-stats article {
+    display: grid;
+    gap: 0.35rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .hero-stats strong {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+  }
+
+  .hero-stats span {
+    color: var(--text-soft);
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

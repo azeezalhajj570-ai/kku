@@ -1,0 +1,101 @@
+---
+import { allPages } from "../data/site";
+import { withBase } from "../data/paths";
+
+const indexedPages = allPages.map((page) => ({ ...page, href: withBase(page.href) }));
+---
+
+<div class="search-box surface-card">
+  <label for="quick-search">ابحث عن صفحة أو أداة</label>
+  <input id="quick-search" type="search" placeholder="مثال: تحويل داخلي، معدل، تقويم..." autocomplete="off" />
+  <ul id="search-results" class="search-results" aria-live="polite"></ul>
+</div>
+
+<script is:inline define:vars={{ pages: indexedPages }}>
+  const input = document.querySelector("#quick-search");
+  const results = document.querySelector("#search-results");
+
+  const renderResults = (items) => {
+    if (!results) return;
+    results.innerHTML = "";
+    if (!items.length) {
+      const li = document.createElement("li");
+      li.textContent = "لا توجد نتائج مطابقة.";
+      results.appendChild(li);
+      return;
+    }
+
+    items.slice(0, 6).forEach((item) => {
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = item.href;
+      link.innerHTML = `<strong>${item.label}</strong><span>${item.description}</span>`;
+      li.appendChild(link);
+      results.appendChild(li);
+    });
+  };
+
+  renderResults(pages.slice(0, 4));
+
+  input?.addEventListener("input", (event) => {
+    const query = event.target.value.trim();
+    if (!query) {
+      renderResults(pages.slice(0, 4));
+      return;
+    }
+
+    const normalized = query.toLowerCase();
+    const matches = pages.filter((item) =>
+      [item.label, item.description, item.category].some((field) =>
+        field.toLowerCase().includes(normalized)
+      )
+    );
+    renderResults(matches);
+  });
+</script>
+
+<style>
+  .search-box {
+    padding: 1rem;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .search-box label {
+    font-size: 0.95rem;
+    color: var(--text-soft);
+  }
+
+  .search-box input {
+    width: 100%;
+    min-height: 3rem;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 0.8rem 1rem;
+  }
+
+  .search-results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .search-results a {
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.85rem 0.95rem;
+    border-radius: 14px;
+    background: var(--surface);
+    text-decoration: none;
+    border: 1px solid var(--line);
+  }
+
+  .search-results span,
+  .search-results li {
+    color: var(--text-soft);
+    font-size: 0.92rem;
+  }
+</style>

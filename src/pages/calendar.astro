@@ -1,0 +1,45 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+const imageUrl = `${import.meta.env.BASE_URL}images/calendar.jpg`;
+---
+
+<ArticleLayout
+  title="التقويم الأكاديمي"
+  description="صورة مرجعية للتقويم الأكاديمي كما وردت في المصدر القديم."
+  summary="تعرض هذه الصفحة النسخة المصورة التي كانت مستخدمة في الموقع القديم مع إطار أوضح وملاحظات تمنع الالتباس بين المرجع القديم والمواعيد المستحدثة."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/tools", label: "الأدوات" },
+    { href: "/calendar", label: "التقويم" }
+  ]}
+  toc={[
+    { href: "#calendar-image", label: "المرجع المصوّر" },
+    { href: "#notes", label: "ملاحظات" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "مرجع زمني" },
+    { label: "نوع المحتوى", value: "صورة مؤرشفة" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <section id="calendar-image">
+    <h2>المرجع المصوّر</h2>
+    <figure class="surface-card framed-image">
+      <img src={imageUrl} alt="صورة التقويم الأكاديمي المأخوذة من الموقع القديم" loading="lazy" />
+    </figure>
+  </section>
+
+  <section id="notes">
+    <h2>ملاحظات مهمة</h2>
+    <Callout tone="warning" title="تحقق من التاريخ قبل الاعتماد">
+      هذه الصفحة تحفظ المرجع الذي كان منشوراً سابقاً، لكنها ليست بديلاً عن التقويم الرسمي الأحدث عند فتح طلبات أو رصد مواعيد نهائية جديدة.
+    </Callout>
+  </section>
+</ArticleLayout>
+
+<style>
+  .framed-image {
+    padding: 1rem;
+  }
+</style>

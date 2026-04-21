@@ -1,0 +1,131 @@
+---
+import { primaryNav } from "../data/site";
+import { withBase } from "../data/paths";
+
+const homeHref = import.meta.env.BASE_URL;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={homeHref} aria-label="العودة إلى الصفحة الرئيسية">
+      <span class="brand-mark">KKU</span>
+      <span class="brand-copy">
+        <strong>دليل KKU الأكاديمي</strong>
+        <small>Academic Guide</small>
+      </span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="التنقل الرئيسي">
+      {primaryNav.map((item) => (
+        <a href={withBase(item.href)}>{item.label}</a>
+      ))}
+    </nav>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-sidebar" data-menu-toggle>
+      <span class="sr-only">فتح القائمة</span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    backdrop-filter: blur(18px);
+    background: rgba(245, 241, 234, 0.76);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4.9rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.85rem;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .brand-copy {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .brand-copy strong {
+    font-size: 0.98rem;
+  }
+
+  .brand-copy small {
+    color: var(--text-soft);
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .desktop-nav a {
+    padding: 0.7rem 0.9rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--text-soft);
+  }
+
+  .desktop-nav a:hover,
+  .desktop-nav a[aria-current="page"] {
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--text);
+  }
+
+  .menu-toggle {
+    display: none;
+    width: 2.8rem;
+    height: 2.8rem;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.82);
+    border-radius: 999px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.22rem;
+  }
+
+  .menu-toggle span:not(.sr-only) {
+    width: 1rem;
+    height: 2px;
+    background: var(--text);
+    border-radius: 999px;
+  }
+
+  @media (max-width: 920px) {
+    .desktop-nav {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: inline-flex;
+    }
+  }
+</style>

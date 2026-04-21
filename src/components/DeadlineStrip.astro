@@ -1,0 +1,45 @@
+---
+import { deadlineStrip } from "../data/site";
+import { withBase } from "../data/paths";
+---
+
+<div class="deadline-strip">
+  {deadlineStrip.map((item) => (
+    <a href={withBase(item.href)} class={`deadline-item ${item.tone === "warning" ? "warning" : ""}`}>
+      <strong>{item.label}</strong>
+      <span>{item.detail}</span>
+    </a>
+  ))}
+</div>
+
+<style>
+  .deadline-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .deadline-item {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1rem 1.1rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--line);
+    text-decoration: none;
+  }
+
+  .deadline-item span {
+    color: var(--text-soft);
+  }
+
+  .deadline-item.warning {
+    background: var(--warning-soft);
+  }
+
+  @media (max-width: 900px) {
+    .deadline-strip {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

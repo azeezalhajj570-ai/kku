@@ -1,0 +1,34 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+const imageUrl = `${import.meta.env.BASE_URL}images/Deanship.jpg`;
+---
+
+<ArticleLayout
+  title="أرقام التواصل مع عمادة القبول والتسجيل"
+  description="المرجع المصور لأرقام التواصل كما ورد في المصدر القديم."
+  summary="حُفظت الصفحة كمرجع خدمات واضح: مقدمة قصيرة، صورة التواصل الأصلية، وتنبيه بضرورة مطابقة الأرقام مع القنوات الرسمية عند التغيير."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/deanship", label: "الخدمات" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "خدمات" },
+    { label: "نوع المحتوى", value: "مرجع مصوّر" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <Callout title="استخدام المرجع">
+    إذا لم تكن الصورة واضحة على الجوال، افتحها في تبويب مستقل أو طابق الرقم مع صفحة العمادة الرسمية قبل إجراء أي تواصل مهم.
+  </Callout>
+
+  <figure class="surface-card framed-image">
+    <img src={imageUrl} alt="أرقام التواصل مع عمادة القبول والتسجيل" loading="lazy" />
+  </figure>
+</ArticleLayout>
+
+<style>
+  .framed-image {
+    padding: 1rem;
+  }
+</style>

@@ -1,0 +1,198 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+---
+
+<ArticleLayout
+  title="حساب المعدل الفصلي"
+  description="حاسبة خفيفة للمعدل الفصلي من 5 مع إجمالي النقاط والساعات."
+  summary="أعيد تصميم الحاسبة لتصبح أسهل على الجوال وأكثر وضوحاً في ترتيب المدخلات والنتائج، مع الحفاظ على وظيفة الصفحة الأصلية."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/tools", label: "الأدوات" },
+    { href: "/gpa", label: "المعدل الفصلي" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "أداة حسابية" },
+    { label: "المقياس", value: "من 5" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <Callout title="طريقة الاستخدام">
+    أضف كل مادة بساعاتها وتقديرها، ثم ستحسب الصفحة مجموع الساعات والنقاط والمعدل التقريبي والتقدير العام بشكل مباشر.
+  </Callout>
+
+  <section class="surface-card calculator-panel">
+    <div class="calculator-head">
+      <h2>المواد</h2>
+      <button id="add-course" class="button button-secondary" type="button">إضافة مادة</button>
+    </div>
+    <div id="course-list" class="course-list"></div>
+  </section>
+
+  <section class="surface-card result-panel">
+    <div>
+      <span class="badge">المعدل الفصلي</span>
+      <p id="gpa-result" class="result-value">0.000</p>
+    </div>
+    <div>
+      <span class="badge">عدد الساعات</span>
+      <p id="hours-result" class="result-value">0</p>
+    </div>
+    <div>
+      <span class="badge">مجموع النقاط</span>
+      <p id="points-result" class="result-value">0.000</p>
+    </div>
+    <div>
+      <span class="badge">التقدير التقريبي</span>
+      <p id="rating-result" class="result-value">-</p>
+    </div>
+  </section>
+
+  <script is:inline>
+    const gradeMap = {
+      "A+": 5,
+      A: 4.75,
+      "B+": 4.5,
+      B: 4,
+      "C+": 3.5,
+      C: 3,
+      "D+": 2.5,
+      D: 2,
+      F: 1
+    };
+
+    const ratings = [
+      { min: 4.5, label: "ممتاز" },
+      { min: 3.75, label: "جيد جداً" },
+      { min: 2.75, label: "جيد" },
+      { min: 2, label: "مقبول" },
+      { min: 0, label: "متعثر" }
+    ];
+
+    const list = document.querySelector("#course-list");
+    const addButton = document.querySelector("#add-course");
+    const gpaResult = document.querySelector("#gpa-result");
+    const hoursResult = document.querySelector("#hours-result");
+    const pointsResult = document.querySelector("#points-result");
+    const ratingResult = document.querySelector("#rating-result");
+
+    const courseTemplate = () => {
+      const row = document.createElement("div");
+      row.className = "course-row";
+      row.innerHTML = `
+        <label>
+          <span>الساعات</span>
+          <input type="number" min="0" step="1" value="3" class="course-hours" />
+        </label>
+        <label>
+          <span>التقدير</span>
+          <select class="course-grade">
+            <option>A+</option>
+            <option>A</option>
+            <option>B+</option>
+            <option selected>B</option>
+            <option>C+</option>
+            <option>C</option>
+            <option>D+</option>
+            <option>D</option>
+            <option>F</option>
+          </select>
+        </label>
+        <button type="button" class="remove-course button button-secondary">حذف</button>
+      `;
+      row.querySelector(".remove-course").addEventListener("click", () => {
+        row.remove();
+        calculate();
+      });
+      row.querySelectorAll("input, select").forEach((el) => el.addEventListener("input", calculate));
+      return row;
+    };
+
+    const calculate = () => {
+      let totalHours = 0;
+      let totalPoints = 0;
+      document.querySelectorAll(".course-row").forEach((row) => {
+        const hours = Number(row.querySelector(".course-hours").value || 0);
+        const grade = row.querySelector(".course-grade").value;
+        totalHours += hours;
+        totalPoints += hours * gradeMap[grade];
+      });
+
+      const gpa = totalHours ? totalPoints / totalHours : 0;
+      gpaResult.textContent = gpa.toFixed(3);
+      hoursResult.textContent = String(totalHours);
+      pointsResult.textContent = totalPoints.toFixed(3);
+      ratingResult.textContent = ratings.find((item) => gpa >= item.min)?.label ?? "-";
+    };
+
+    addButton?.addEventListener("click", () => {
+      list.appendChild(courseTemplate());
+      calculate();
+    });
+
+    for (let i = 0; i < 4; i += 1) list.appendChild(courseTemplate());
+    calculate();
+  </script>
+</ArticleLayout>
+
+<style>
+  .calculator-panel,
+  .result-panel {
+    padding: 1.25rem;
+  }
+
+  .calculator-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .course-list {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .course-row {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    gap: 0.8rem;
+    align-items: end;
+  }
+
+  .course-row label {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .course-row input,
+  .course-row select {
+    min-height: 3rem;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+  }
+
+  .result-panel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .result-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-top: 0.7rem;
+  }
+
+  @media (max-width: 860px) {
+    .course-row,
+    .result-panel {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

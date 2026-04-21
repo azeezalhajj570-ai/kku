@@ -1,0 +1,68 @@
+---
+import { footerLinks } from "../data/site";
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="eyebrow">ملاحظة تحريرية</p>
+      <p class="footer-copy">
+        هذه النسخة تبني تجربة أوضح من المصدر القديم، لكنها تظل مرجعاً مستقلاً غير رسمي ويجب
+        مطابقة أي إجراء نهائي مع القنوات الرسمية للجامعة.
+      </p>
+    </div>
+    <div>
+      <h2>روابط مرجعية</h2>
+      <ul>
+        {footerLinks.map((link) => (
+          <li><a href={link.href} target="_blank" rel="noreferrer">{link.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: 2.5rem 3rem;
+    border-top: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.35);
+    margin-top: 3rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+  }
+
+  .footer-copy {
+    margin-top: 1rem;
+    color: var(--text-soft);
+  }
+
+  .site-footer h2 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .site-footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .site-footer a {
+    color: var(--text-soft);
+    text-decoration: none;
+  }
+
+  @media (max-width: 780px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

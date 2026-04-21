@@ -1,0 +1,13 @@
+---
+import Header from "./Header.astro";
+import Sidebar from "./Sidebar.astro";
+import Footer from "./Footer.astro";
+---
+
+<a class="skip-link" href="#main-content">تخطي إلى المحتوى</a>
+<Header />
+<Sidebar />
+<main id="main-content">
+  <slot />
+</main>
+<Footer />

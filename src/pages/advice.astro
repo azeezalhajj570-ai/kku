@@ -1,0 +1,44 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import { adviceItems } from "../data/content";
+---
+
+<ArticleLayout
+  title="نصائح مهمة"
+  description="مجموعة مختصرة من النصائح الأكاديمية والسلوكية للطالب الجامعي."
+  summary="المحتوى نفسه الذي كان موجوداً سابقاً، لكن في قائمة تحريرية أنظف وأسهل للمراجعة والعودة السريعة."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/advice", label: "نصائح مهمة" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "إرشاد" },
+    { label: "المحتوى", value: "نصائح ثابتة" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <section>
+    <h2>أفضل الممارسات اليومية</h2>
+    <ul class="advice-list">
+      {adviceItems.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </section>
+</ArticleLayout>
+
+<style>
+  .advice-list {
+    display: grid;
+    gap: 0.8rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .advice-list li {
+    padding: 1rem 1.1rem;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+</style>

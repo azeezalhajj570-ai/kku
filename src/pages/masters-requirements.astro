@@ -1,0 +1,29 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import { mastersRequirements } from "../data/content";
+---
+
+<ArticleLayout
+  title="شروط برامج الماجستير"
+  description="الشروط العامة للتقديم على برامج الماجستير كما وردت في المصدر القديم."
+  summary="تمت إعادة ترتيب شروط الماجستير إلى قائمة قابلة للمسح السريع مع الحفاظ على النصوص الأساسية والمرجع المذكور في الموقع السابق."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/policies", label: "اللوائح" },
+    { href: "/masters-requirements", label: "شروط الماجستير" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "دراسات عليا" },
+    { label: "المصدر", value: "dps.kku.edu.sa/ar/node/988" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <section>
+    <h2>الشروط العامة</h2>
+    <ul class="link-list">
+      {mastersRequirements.map((item) => (
+        <li><span>{item}</span></li>
+      ))}
+    </ul>
+  </section>
+</ArticleLayout>

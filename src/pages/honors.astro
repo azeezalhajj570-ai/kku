@@ -1,0 +1,34 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+import { honorsRules } from "../data/content";
+---
+
+<ArticleLayout
+  title="مراتب الشرف"
+  description="شروط مراتب الشرف كما وردت في المصدر القديم مع تنظيم أوضح."
+  summary="تجمع الصفحة شروط مراتب الشرف والمعدلات المرتبطة بها في عرض مختصر وواضح مع الإبقاء على الإشارة إلى المصدر القديم."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/policies", label: "اللوائح" },
+    { href: "/honors", label: "مراتب الشرف" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "لائحة أكاديمية" },
+    { label: "المصدر", value: "dar.kku.edu.sa/faq/836" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <Callout title="المعدلات الأساسية">
+    مرتبة الشرف الأولى من 4.75 إلى 5.00، ومرتبة الشرف الثانية أقل من 4.75 إلى 4.25.
+  </Callout>
+
+  <section>
+    <h2>الشروط</h2>
+    <ul class="link-list">
+      {honorsRules.map((rule) => (
+        <li><span>{rule}</span></li>
+      ))}
+    </ul>
+  </section>
+</ArticleLayout>

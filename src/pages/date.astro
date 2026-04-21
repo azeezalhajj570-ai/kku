@@ -1,0 +1,82 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+---
+
+<ArticleLayout
+  title="التاريخ والوقت"
+  description="لوحة مباشرة للتاريخين الهجري والميلادي والوقت الحالي."
+  summary="بدلاً من صفحة بسيطة بلا سياق، أصبحت هذه اللوحة تعرض التاريخ والوقت بصياغة أوضح مع تحديث حي مناسب للاستخدام اليومي."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/tools", label: "الأدوات" },
+    { href: "/date", label: "التاريخ" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "أداة يومية" },
+    { label: "التحديث", value: "مباشر في المتصفح" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <section class="time-panel surface-card">
+    <div>
+      <span class="badge">اليوم</span>
+      <h2 id="weekday">--</h2>
+    </div>
+    <div>
+      <span class="badge">التاريخ الهجري</span>
+      <p id="hijri" class="time-value">--</p>
+    </div>
+    <div>
+      <span class="badge">التاريخ الميلادي</span>
+      <p id="gregorian" class="time-value">--</p>
+    </div>
+    <div>
+      <span class="badge">الوقت الحالي</span>
+      <p id="clock" class="time-value">--</p>
+    </div>
+  </section>
+
+  <script is:inline>
+    const weekday = document.querySelector("#weekday");
+    const hijri = document.querySelector("#hijri");
+    const gregorian = document.querySelector("#gregorian");
+    const clock = document.querySelector("#clock");
+
+    const updateClock = () => {
+      const now = new Date();
+      weekday.textContent = new Intl.DateTimeFormat("ar-SA", { weekday: "long" }).format(now);
+      hijri.textContent = new Intl.DateTimeFormat("ar-SA-u-ca-islamic", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }).format(now);
+      gregorian.textContent = new Intl.DateTimeFormat("ar-SA", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      }).format(now);
+      clock.textContent = new Intl.DateTimeFormat("ar-SA", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric"
+      }).format(now);
+    };
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</ArticleLayout>
+
+<style>
+  .time-panel {
+    display: grid;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .time-value {
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    font-weight: 600;
+    margin-top: 0.7rem;
+  }
+</style>

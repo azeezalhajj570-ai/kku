@@ -1,0 +1,17 @@
+---
+import SectionLayout from "../layouts/SectionLayout.astro";
+import ContentSection from "../components/ContentSection.astro";
+import CardGrid from "../components/CardGrid.astro";
+import { sectionCards } from "../data/site";
+---
+
+<SectionLayout
+  title="اللوائح والمسارات الأكاديمية"
+  description="صفحات السياسات والمسارات الأكاديمية الأساسية في تجربة واحدة أوضح."
+  eyebrow="Policies"
+  summary="هذه المسارات تجمع الصفحات التنظيمية التي كانت موزعة في المصدر القديم: التحويل، الماجستير، الاعتذار عن مادة، ومراتب الشرف."
+>
+  <ContentSection title="المسارات الأساسية" summary="اختر الصفحة حسب السؤال الذي تحاول حسمه، لا حسب اسم الملف القديم.">
+    <CardGrid items={sectionCards.policies.map((item) => ({ ...item, title: item.label, tag: item.category }))} />
+  </ContentSection>
+</SectionLayout>

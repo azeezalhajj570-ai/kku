@@ -1,0 +1,66 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import { gradeBands, gradeSymbols } from "../data/content";
+---
+
+<ArticleLayout
+  title="رموز الدرجات والمعدل"
+  description="جدول رموز التقديرات الجامعية ومعانيها، إضافة إلى نطاقات المعدل العام."
+  summary="هذه الصفحة تنظّم الجداول الموجودة في المصدر القديم إلى جدولين واضحين: رموز الدرجات، ثم نطاقات المعدل والتقدير العام."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/tools", label: "الأدوات" },
+    { href: "/grade", label: "رموز الدرجات" }
+  ]}
+  toc={[
+    { href: "#symbols", label: "رموز الدرجات" },
+    { href: "#bands", label: "نطاقات المعدل" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "مرجع أكاديمي" },
+    { label: "المحتوى", value: "جداول ثابتة" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <section id="symbols">
+    <h2>رموز الدرجات</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>الدرجة المئوية</th>
+          <th>الرمز</th>
+          <th>التقدير</th>
+        </tr>
+      </thead>
+      <tbody>
+        {gradeSymbols.map(([range, symbol, label]) => (
+          <tr>
+            <td>{range}</td>
+            <td>{symbol}</td>
+            <td>{label}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+
+  <section id="bands">
+    <h2>نطاقات المعدل</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>المعدل</th>
+          <th>التقدير</th>
+        </tr>
+      </thead>
+      <tbody>
+        {gradeBands.map(([range, label]) => (
+          <tr>
+            <td>{range}</td>
+            <td>{label}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+</ArticleLayout>

@@ -1,0 +1,36 @@
+---
+import SectionLayout from "../layouts/SectionLayout.astro";
+import ContentSection from "../components/ContentSection.astro";
+import CardGrid from "../components/CardGrid.astro";
+import Callout from "../components/Callout.astro";
+import { sectionCards } from "../data/site";
+---
+
+<SectionLayout
+  title="الأدوات الأكاديمية"
+  description="مجموعة الأدوات والصفحات الزمنية المساعدة لطلاب جامعة الملك خالد."
+  eyebrow="Tools"
+  summary="كل الأدوات العملية في مكان واحد: حساب المعدل، تقدير الغياب، قراءة الرموز، ومتابعة المراجع الزمنية اليومية."
+>
+  <ContentSection title="الأدوات الأساسية" summary="ابدأ بما تحتاجه فوراً ثم انتقل إلى الصفحة المرتبطة باللوائح أو المراجع عند الحاجة.">
+    <CardGrid items={sectionCards.tools.map((item) => ({ ...item, title: item.label, tag: item.category }))} />
+  </ContentSection>
+
+  <ContentSection title="كيف تستخدم هذه المجموعة؟">
+    <div class="tool-notes">
+      <Callout title="قبل اتخاذ قرار أكاديمي">
+        استخدم الأدوات كمؤشرات مساعدة فقط، ثم ارجع إلى اللوائح الرسمية أو إلى المرشد الأكاديمي إذا كان القرار يغيّر خطتك الدراسية.
+      </Callout>
+      <Callout title="أفضل تسلسل عملي">
+        في العادة تبدأ بـ <strong>المعدل</strong> أو <strong>الغياب</strong> ثم تنتقل إلى صفحة <strong>التحويل</strong> أو <strong>الاعتذار</strong> إذا كانت النتيجة تؤثر على قرارك.
+      </Callout>
+    </div>
+  </ContentSection>
+</SectionLayout>
+
+<style>
+  .tool-notes {
+    display: grid;
+    gap: 1rem;
+  }
+</style>

@@ -1,0 +1,136 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+---
+
+<ArticleLayout
+  title="حاسبة الغياب"
+  description="حاسبة تقديرية لنسبة الغياب سواء لمادة واحدة أو كنسبة كلية."
+  summary="تم تبسيط الحاسبة القديمة إلى واجهة أوضح تشرح المدخلات المطلوبة وتعرض النتيجة فوراً مع تذكير بأن الحسابات تقريبية."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/tools", label: "الأدوات" },
+    { href: "/rate", label: "حاسبة الغياب" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "أداة تقديرية" },
+    { label: "الوضع", value: "نسبة مادة أو نسبة كلية" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <Callout tone="warning" title="تنبيه">
+    جميع الحسابات تقريبية وليست بديلاً عن النسبة المعتمدة داخل النظام الأكاديمي أو ما يعلنه عضو هيئة التدريس.
+  </Callout>
+
+  <section class="surface-card absence-panel">
+    <div class="form-grid">
+      <label>
+        <span>نوع الحساب</span>
+        <select id="mode">
+          <option value="course">نسبة الغياب لمادة واحدة</option>
+          <option value="overall">النسبة الكلية</option>
+        </select>
+      </label>
+      <label>
+        <span>أيام أو ساعات الغياب</span>
+        <input id="missed" type="number" min="0" step="1" value="0" />
+      </label>
+      <label>
+        <span>إجمالي الأيام أو الساعات</span>
+        <input id="total" type="number" min="1" step="1" value="14" />
+      </label>
+      <label>
+        <span>نوع المسار</span>
+        <select id="track">
+          <option value="normal">تخصص عادي</option>
+          <option value="strict">التخصصات الصحية والمسار الهندسي</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <section class="surface-card result-panel">
+    <div>
+      <span class="badge">النسبة الحالية</span>
+      <p id="absence-rate" class="result-value">0%</p>
+    </div>
+    <div>
+      <span class="badge">حد التنبيه التقريبي</span>
+      <p id="absence-limit" class="result-value">25%</p>
+    </div>
+    <div>
+      <span class="badge">القراءة السريعة</span>
+      <p id="absence-status" class="result-value">آمن حالياً</p>
+    </div>
+  </section>
+
+  <script is:inline>
+    const mode = document.querySelector("#mode");
+    const missed = document.querySelector("#missed");
+    const total = document.querySelector("#total");
+    const track = document.querySelector("#track");
+    const rateEl = document.querySelector("#absence-rate");
+    const limitEl = document.querySelector("#absence-limit");
+    const statusEl = document.querySelector("#absence-status");
+
+    const updateAbsence = () => {
+      const m = Number(missed.value || 0);
+      const t = Math.max(1, Number(total.value || 1));
+      const ratio = (m / t) * 100;
+      const limit = track.value === "strict" ? 20 : 25;
+      rateEl.textContent = `${ratio.toFixed(1)}%`;
+      limitEl.textContent = `${limit}%`;
+      if (ratio >= limit) {
+        statusEl.textContent = "تجاوزت الحد التقريبي";
+      } else if (ratio >= limit * 0.8) {
+        statusEl.textContent = "قريب من الحد";
+      } else {
+        statusEl.textContent = mode.value === "overall" ? "ضمن النطاق العام" : "آمن حالياً";
+      }
+    };
+
+    [mode, missed, total, track].forEach((el) => el?.addEventListener("input", updateAbsence));
+    updateAbsence();
+  </script>
+</ArticleLayout>
+
+<style>
+  .absence-panel,
+  .result-panel {
+    padding: 1.25rem;
+  }
+
+  .form-grid,
+  .result-panel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .form-grid label {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .form-grid input,
+  .form-grid select {
+    min-height: 3rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .result-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 0.7rem;
+  }
+
+  @media (max-width: 920px) {
+    .form-grid,
+    .result-panel {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

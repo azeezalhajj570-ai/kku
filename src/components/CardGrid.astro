@@ -1,0 +1,70 @@
+---
+import { withBase } from "../data/paths";
+
+type Card = {
+  href: string;
+  title: string;
+  description: string;
+  tag?: string;
+};
+
+interface Props {
+  items: Card[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="card-grid">
+  {items.map((item) => (
+    <a href={withBase(item.href)} class="card surface-card">
+      {item.tag && <span class="badge">{item.tag}</span>}
+      <h3>{item.title}</h3>
+      <p>{item.description}</p>
+      <span class="card-link">فتح الصفحة</span>
+    </a>
+  ))}
+</div>
+
+<style>
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+  }
+
+  .card {
+    grid-column: span 3;
+    display: grid;
+    gap: 0.9rem;
+    padding: 1.25rem;
+    text-decoration: none;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .card p {
+    color: var(--text-soft);
+  }
+
+  .card-link {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  @media (max-width: 1040px) {
+    .card {
+      grid-column: span 6;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .card {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

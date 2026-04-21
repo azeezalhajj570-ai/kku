@@ -1,0 +1,34 @@
+---
+import ArticleLayout from "../layouts/ArticleLayout.astro";
+import Callout from "../components/Callout.astro";
+import { internalTransferRules } from "../data/content";
+---
+
+<ArticleLayout
+  title="شروط التحويل الداخلي"
+  description="ضوابط التحويل بين الكليات والتخصصات داخل جامعة الملك خالد."
+  summary="تعرض الصفحة شروط التحويل الداخلي في صيغة أوضح مع ترتيب عملي: أهلية الطالب، عدد مرات التحويل، المدة الدراسية، والمفاضلة."
+  breadcrumbs={[
+    { href: "/", label: "الرئيسية" },
+    { href: "/policies", label: "اللوائح" },
+    { href: "/internal-transfer-terms", label: "التحويل الداخلي" }
+  ]}
+  metadata={[
+    { label: "التصنيف", value: "تحويل داخلي" },
+    { label: "المصدر", value: "dar.kku.edu.sa/ar/node/905" },
+    { label: "آخر مراجعة", value: "21 أبريل 2026" }
+  ]}
+>
+  <Callout title="مختصر القرار">
+    غالباً ستحتاج إلى معدل لا يقل عن 3 من 5، وحالة أكاديمية منتظمة، وفصلين دراسيين على الأقل، مع تقديم الطلب إلكترونياً في الفترة المحددة.
+  </Callout>
+
+  <section>
+    <h2>الضوابط</h2>
+    <ul class="link-list">
+      {internalTransferRules.map((rule) => (
+        <li><span>{rule}</span></li>
+      ))}
+    </ul>
+  </section>
+</ArticleLayout>
